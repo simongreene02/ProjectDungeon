@@ -1,18 +1,26 @@
 package core;
 
 public class Battle {
-	
-	public Entity Battle(boolean recoveryAfterBattle, Entity player, Entity enemy) {
+
+
+	public static Entity doBattle(boolean recoveryAfterBattle, Entity player, Entity enemy) {
 		while (player.currentHealth >= 0 && enemy.currentHealth >= 0) {
-			if (player.currentHealth >= 0) {
-				System.out.println(player.onTurn(enemy).onUse(player, enemy));
+			if (player.currentHealth > 0) {
+				Skill usedSkill = player.onTurn(enemy);
+				System.out.println("You used " + usedSkill.getName());
+				usedSkill.onUse(player, enemy);
 			}
-			if (enemy.currentHealth >= 0) {
-				System.out.println(enemy.onTurn(player).onUse(enemy, player));
+			if (enemy.currentHealth > 0) {
+				Skill usedSkill = enemy.onTurn(player);
+				System.out.println("The enemy used " + usedSkill.getName());
+				usedSkill.onUse(enemy, player);
 			}
 		}
 		if (recoveryAfterBattle == true && player.currentHealth > 0) {
 			player.currentHealth = player.getMaxHealth();
+			for (Skill s : player.getSkillList()) {
+				s.onBattleEnd();
+			}
 		}
 		if (player.currentHealth > enemy.currentHealth) {
 			return player;
