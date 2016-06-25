@@ -3,8 +3,8 @@ package core;
 import java.util.ArrayList;
 
 public class Room {
-	public int x = 0;
-	public int y = 0;
+	private int x = 0;
+	private int y = 0;
 	private ArrayList<Item> itemList = new ArrayList<Item>();
 	private ArrayList<Entity> enemyList = new ArrayList<Entity>();
 	
@@ -28,6 +28,12 @@ public class Room {
 		this.enemyList = enemyList;
 	}
 	
+	public Room(int x, int y, int difficulty) {
+		this.x = x;
+		this.y = y;
+		
+	}
+	
 	public boolean onEnter(Player player) {
 		boolean isPlayerAlive = true;
 		for (Entity enemy : enemyList) {
@@ -43,5 +49,21 @@ public class Room {
 			}
 		}
 		return isPlayerAlive;
+	}
+
+	int getX() {
+		return x;
+	}
+
+	int getY() {
+		return y;
+	}
+
+	ArrayList<Item> getItemList() {
+		return itemList;
+	}
+
+	ArrayList<Entity> getEnemyList() {
+		return enemyList;
 	}
 }
