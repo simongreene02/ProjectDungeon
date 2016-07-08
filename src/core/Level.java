@@ -7,6 +7,8 @@ public class Level {
 	private Random random = new Random();
 	private final int LEVEL_SIZE;
 	public ArrayList<Room> rooms = new ArrayList();
+	private final int STAIRCASE_X;
+	private final int STAIRCASE_Y;
 
 	public Level(int levelSize, int averageRoomDifficulty) {
 		LEVEL_SIZE = Math.max(2, levelSize);
@@ -21,12 +23,16 @@ public class Level {
 		ArrayList<Integer> roomDifficulties = new ArrayList<Integer>();
 		roomDifficulties.add(0);
 		while (roomDifficulties.size() < LEVEL_SIZE) {
-			roomDifficulties.add((int) (averageRoomDifficulty * 0.5 + random.nextInt(averageRoomDifficulty)));
+			roomDifficulties.add((int) (averageRoomDifficulty * 0.75 + random.nextInt(averageRoomDifficulty/2)));
 		}
 		for (int i = 0; i < roomDifficulties.size() - 1; i++) {
-			roomDifficulties.set(roomDifficulties.size() - 1, (int) (roomDifficulties.get(LEVEL_SIZE - 1) + (averageRoomDifficulty * 1.5 - roomDifficulties.get(i))));
+			roomDifficulties.set(LEVEL_SIZE - 1, (int) (roomDifficulties.get(LEVEL_SIZE - 1)
+					+ (averageRoomDifficulty * 1.5 - roomDifficulties.get(i))));
 		}
-		roomDifficulties.set(roomDifficulties.size() - 1, (int) roomDifficulties.get(LEVEL_SIZE - 1) / LEVEL_SIZE * 10);
+		roomDifficulties.set(roomDifficulties.size() - 1, (int) (roomDifficulties.get(LEVEL_SIZE - 1) / LEVEL_SIZE * 3.5));
+		for (int difficulty : roomDifficulties) {
+			System.out.println(difficulty);
+		}
 		while (rooms.size() < LEVEL_SIZE) {
 			corridorLength = Math.min(random.nextInt(maxCorridorLength - minCorridorLength) + minCorridorLength,
 					LEVEL_SIZE - rooms.size());
@@ -52,6 +58,8 @@ public class Level {
 				rooms.add(new Room(roomLocationX, roomLocationY, roomDifficulties.get(rooms.size())));
 			}
 		}
+		STAIRCASE_X = rooms.get(LEVEL_SIZE - 1).getX();
+		STAIRCASE_Y = rooms.get(LEVEL_SIZE - 1).getY();
 	}
 
 	public Room findRoomAt(int x, int y) {
@@ -62,7 +70,7 @@ public class Level {
 		}
 		return null;
 	}
-	
+
 	public void drawLevel() {
 		int minX = 0;
 		int minY = 0;
@@ -76,11 +84,17 @@ public class Level {
 		}
 		for (int y = maxY + 1; y >= minY - 1; y--) {
 			for (int x = minX - 1; x <= maxX + 1; x++) {
-				if (findRoomAt(x, y) == null) {
-					System.out.print("-");
+				if (x == 0 && y == 0) {
+					System.out.print("<");
 				}
-				if (findRoomAt(x, y) != null) {
+				else if (x == STAIRCASE_X && y == STAIRCASE_Y) {
+					System.out.print(">");
+				}
+				else if (findRoomAt(x, y) != null) {
 					System.out.print("+");
+				}
+				else {
+					System.out.print("-");
 				}
 			}
 			System.out.println();
