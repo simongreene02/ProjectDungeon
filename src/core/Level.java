@@ -4,15 +4,17 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Level {
-	private Random random = new Random();
-	private final int LEVEL_SIZE;
+	private final Random random;
 	public ArrayList<Room> rooms = new ArrayList();
 	private final int STAIRCASE_X;
 	private final int STAIRCASE_Y;
 
-	public Level(int levelSize, int averageRoomDifficulty) {
-		LEVEL_SIZE = Math.max(2, levelSize);
-		int maxCorridorLength = random.nextInt(LEVEL_SIZE - 1) + 2;
+	public Level(Random random, int levelSize, int averageRoomDifficulty) {
+		this.random = random;
+		if (levelSize < 2) {
+			throw new IllegalArgumentException("The LevelSize must be greater than or equal to 2, as opposed to the current value of " + levelSize);
+		}
+		int maxCorridorLength = random.nextInt(levelSize - 1) + 2;
 		int minCorridorLength = random.nextInt(maxCorridorLength - 1) + 1;
 		int corridorLength;
 		int roomLocationX;
@@ -22,20 +24,20 @@ public class Level {
 		rooms.add(new Room(0, 0));
 		ArrayList<Integer> roomDifficulties = new ArrayList<Integer>();
 		roomDifficulties.add(0);
-		while (roomDifficulties.size() < LEVEL_SIZE) {
+		while (roomDifficulties.size() < levelSize) {
 			roomDifficulties.add((int) (averageRoomDifficulty * 0.75 + random.nextInt(averageRoomDifficulty/2)));
 		}
 		for (int i = 0; i < roomDifficulties.size() - 1; i++) {
-			roomDifficulties.set(LEVEL_SIZE - 1, (int) (roomDifficulties.get(LEVEL_SIZE - 1)
+			roomDifficulties.set(levelSize - 1, (int) (roomDifficulties.get(levelSize - 1)
 					+ (averageRoomDifficulty * 1.5 - roomDifficulties.get(i))));
 		}
-		roomDifficulties.set(roomDifficulties.size() - 1, (int) (roomDifficulties.get(LEVEL_SIZE - 1) / LEVEL_SIZE * 3.5));
+		roomDifficulties.set(roomDifficulties.size() - 1, (int) (roomDifficulties.get(levelSize - 1) / levelSize * 3.5));
 		for (int difficulty : roomDifficulties) {
 			System.out.println(difficulty);
 		}
-		while (rooms.size() < LEVEL_SIZE) {
+		while (rooms.size() < levelSize) {
 			corridorLength = Math.min(random.nextInt(maxCorridorLength - minCorridorLength) + minCorridorLength,
-					LEVEL_SIZE - rooms.size());
+					levelSize - rooms.size());
 			corridorStart = rooms.get(random.nextInt(rooms.size()));
 			roomLocationX = corridorStart.getX();
 			roomLocationY = corridorStart.getY();
@@ -58,8 +60,8 @@ public class Level {
 				rooms.add(new Room(roomLocationX, roomLocationY, roomDifficulties.get(rooms.size())));
 			}
 		}
-		STAIRCASE_X = rooms.get(LEVEL_SIZE - 1).getX();
-		STAIRCASE_Y = rooms.get(LEVEL_SIZE - 1).getY();
+		STAIRCASE_X = rooms.get(levelSize - 1).getX();
+		STAIRCASE_Y = rooms.get(levelSize - 1).getY();
 	}
 
 	public Room findRoomAt(int x, int y) {
