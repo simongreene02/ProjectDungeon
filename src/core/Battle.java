@@ -2,7 +2,16 @@ package core;
 
 public class Battle {
 
-
+	/**
+	 * Starts a battle between two entities.
+	 * 
+	 * @param recoveryAfterBattle
+	 *            Whether or not the victorious entity will get a full recovery
+	 *            after battle
+	 * @param player
+	 * @param enemy
+	 * @return The entity that won the battle.
+	 */
 	public static Entity doBattle(boolean recoveryAfterBattle, Entity player, Entity enemy) {
 		while (player.currentHealth >= 0 && enemy.currentHealth >= 0) {
 			if (player.currentHealth > 0) {
@@ -16,18 +25,15 @@ public class Battle {
 				usedSkill.onUse(enemy, player);
 			}
 		}
-		if (recoveryAfterBattle == true && player.currentHealth > 0) {
-			player.currentHealth = player.getMaxHealth();
-			for (Skill s : player.getSkillList()) {
-				s.onBattleEnd();
+		if (player.currentHealth > 0) {
+			if (recoveryAfterBattle) {
+				player.currentHealth = player.getMaxHealth();
+				for (Skill skill : player.getSkillList()) {
+					skill.onBattleEnd();
+				}
 			}
-		}
-		if (player.currentHealth > enemy.currentHealth) {
 			return player;
-		} else if (enemy.currentHealth > player.currentHealth) {
-			return enemy;
-		} else {
-			return null;
 		}
+		return enemy;
 	}
 }
