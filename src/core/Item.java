@@ -1,12 +1,18 @@
 package core;
 
-public class Item extends Skill {
+public class Item implements Posession{
 
 	public Item() {
-
+		
 	}
 	
 	public String getName() {
-	  return super.getName();
+	  throw new UnsupportedOperationException("TODO");
+	}
+
+	@Override
+	public void onUse(Entity user, Entity target) {
+		// TODO Auto-generated method stub
+		
 	}
 }

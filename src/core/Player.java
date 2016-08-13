@@ -1,9 +1,14 @@
 package core;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 
 public class Player extends Entity {
+	public Player(Random random, int maxHealth) {
+		super(random, maxHealth);
+	}
+
 	private ArrayList<Item> inventory = new ArrayList<Item>();
 	Scanner scanner = new Scanner(System.in);
 
@@ -11,7 +16,7 @@ public class Player extends Entity {
 		inventory.add(e);
 	}
 	
-	public Skill onTurn(Entity enemy) {
+	public Posession onTurn(Entity enemy) {
 		if (inventory.size() == 1 && getSkillList().size() == 0) {
 			return inventory.get(0);
 		}
@@ -19,13 +24,13 @@ public class Player extends Entity {
 			return getSkillList().get(0);
 		}
 		System.out.println("Enemy: ");
-		System.out.println("HP: " + enemy.currentHealth + "/" + enemy.getMaxHealth());
+		System.out.println("HP: " + enemy.getCurrentHealth() + "/" + enemy.getMaxHealth());
 		System.out.println("Skills: ");
 		for (int i = 1; i <= enemy.getSkillList().size(); i++) {
 			System.out.println("\t" + i + ". " + enemy.getSkillList().get(i-1));
 		}
 		System.out.println("Player:");
-		System.out.println("HP: " + currentHealth + "/" + getMaxHealth());
+		System.out.println("HP: " + getCurrentHealth() + "/" + getMaxHealth());
 		System.out.println("Skills: ");
 		for (int i = 1; i <= getSkillList().size(); i++) {
 			System.out.println("\t" + i + ". " + getSkillList().get(i-1));

@@ -13,21 +13,21 @@ public class Battle {
 	 * @return The entity that won the battle.
 	 */
 	public static Entity doBattle(boolean recoveryAfterBattle, Entity player, Entity enemy) {
-		while (player.currentHealth >= 0 && enemy.currentHealth >= 0) {
-			if (player.currentHealth > 0) {
-				Skill usedSkill = player.onTurn(enemy);
+		while (player.getCurrentHealth() >= 0 && enemy.getCurrentHealth() >= 0) {
+			if (player.getCurrentHealth() > 0) {
+				Posession usedSkill = player.onTurn(enemy);
 				System.out.println("You used " + usedSkill.getName());
 				usedSkill.onUse(player, enemy);
 			}
-			if (enemy.currentHealth > 0) {
-				Skill usedSkill = enemy.onTurn(player);
+			if (enemy.getCurrentHealth() > 0) {
+				Posession usedSkill = enemy.onTurn(player);
 				System.out.println("The enemy used " + usedSkill.getName());
 				usedSkill.onUse(enemy, player);
 			}
 		}
-		if (player.currentHealth > 0) {
+		if (player.getCurrentHealth() > 0) {
 			if (recoveryAfterBattle) {
-				player.currentHealth = player.getMaxHealth();
+				player.incrementCurrentHealth(player.getMaxHealth());
 				for (Skill skill : player.getSkillList()) {
 					skill.onBattleEnd();
 				}
