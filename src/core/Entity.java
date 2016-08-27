@@ -9,7 +9,7 @@ import com.sun.org.apache.xerces.internal.util.DatatypeMessageFormatter;
 import util.Predecate;
 
 /**
- * This class is a mutable that represents a charactor entity
+ * This class is a mutable that represents a character entity
  * 
  * @author ninja
  *
