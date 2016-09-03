@@ -2,7 +2,7 @@ package core;
 
 import java.util.ArrayList;
 
-public class Room {
+public class Room implements Tile {
 	private int x = 0;
 	private int y = 0;
 	private ArrayList<Item> itemList = new ArrayList<Item>();

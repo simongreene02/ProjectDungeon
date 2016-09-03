@@ -3,13 +3,16 @@ package core;
 import java.util.ArrayList;
 import java.util.Random;
 
-public class Level {
+public class Floor {
 	private final Random random;
-	public ArrayList<Room> rooms = new ArrayList();
+	public ArrayList<Room> rooms = new ArrayList<Room>();
 	private final int STAIRCASE_X;
 	private final int STAIRCASE_Y;
 
-	public Level(Random random, int levelSize, int averageRoomDifficulty) {
+	public Floor(int levelSize, int averageRoomDifficulty) {
+		this(new Random(), levelSize, averageRoomDifficulty);
+	}
+	public Floor(Random random, int levelSize, int averageRoomDifficulty) {
 		this.random = random;
 		if (levelSize < 2) {
 			throw new IllegalArgumentException("The LevelSize must be greater than or equal to 2, as opposed to the current value of " + levelSize);

@@ -22,9 +22,9 @@ public class FileReader {
 	 * </pre>
 	 * That creates 10 length array of strings. 
 	 * @param input
-	 * @return
+	 * @return Array of Strings
 	 */
-	public String[] convert(String input) {
+	String[] convert(String input) {
 		if (input == null) {
 			throw new IllegalArgumentException("Do not enter a null value as an input");
 		}
