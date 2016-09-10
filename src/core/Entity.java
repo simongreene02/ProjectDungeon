@@ -6,7 +6,7 @@ import java.util.Random;
 
 import com.sun.org.apache.xerces.internal.util.DatatypeMessageFormatter;
 
-import util.Predecate;
+import util.Preconditions;
 
 /**
  * This class is a mutable that represents a character entity
@@ -26,8 +26,8 @@ public class Entity {
 	
 	public Entity(Random random, int maxHealth, int currentHealth) {
 		this.random = random;
-		this.maxHealth = Predecate.checkGreaterThanZero(maxHealth);
-		this.currentHealth = Predecate.checkGreaterThanZero(Predecate.checkLessThanEqualToValue(currentHealth, maxHealth));
+		this.maxHealth = Preconditions.checkGreaterThanZero(maxHealth);
+		this.currentHealth = Preconditions.checkGreaterThanZero(Preconditions.checkLessThanEqualToValue(currentHealth, maxHealth));
 	}
 
 	public int getMaxHealth() {
@@ -90,7 +90,7 @@ public class Entity {
 	 *             when the damage value is less than or greater than 0
 	 */
 	public void decrementCurrentHealth(int damageValue) {
-		currentHealth = Math.max(currentHealth - Predecate.checkGreaterThanZero(damageValue), 0);
+		currentHealth = Math.max(currentHealth - Preconditions.checkGreaterThanZero(damageValue), 0);
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class Entity {
 	 *             when the healing value is less than or greater than 0
 	 */
 	public void incrementCurrentHealth(int healingValue) {
-		currentHealth = Math.min(currentHealth + Predecate.checkGreaterThanZero(healingValue), maxHealth);
+		currentHealth = Math.min(currentHealth + Preconditions.checkGreaterThanZero(healingValue), maxHealth);
 	}
 
 }

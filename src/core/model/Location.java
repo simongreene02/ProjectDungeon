@@ -9,7 +9,7 @@ public class Location {
 		this.x = x;
 		this.y = y;
 	}
-	public static Location of (int x, int y) {
+	public static Location of(int x, int y) {
 		return new Location(x, y);
 	}
 	@Override

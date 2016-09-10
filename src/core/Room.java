@@ -51,13 +51,7 @@ public class Room implements Tile {
 		return isPlayerAlive;
 	}
 
-	int getX() {
-		return x;
-	}
 
-	int getY() {
-		return y;
-	}
 
 	ArrayList<Item> getItemList() {
 		return itemList;
@@ -66,4 +60,21 @@ public class Room implements Tile {
 	ArrayList<Entity> getEnemyList() {
 		return enemyList;
 	}
+
+	@Override
+	public boolean canBeEntered() {
+		return true;
+	}
+
+	@Override
+	public int getX() {
+		return x;
+	}
+
+	@Override
+	public int getY() {
+		return y;
+	}
+	
+	
 }

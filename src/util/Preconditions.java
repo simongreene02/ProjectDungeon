@@ -1,6 +1,6 @@
 package util;
 
-public class Predecate {
+public class Preconditions {
 	public static int checkGreaterThanZero(int value) {
 		if (value <= 0) {
 			throw new IllegalArgumentException("Value is not allowed to be less than or equal to zero");
